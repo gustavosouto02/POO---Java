@@ -1,0 +1,122 @@
+##Exercício 1
+
+1. Escreva um aplicativo que solicita ao usuário inserir dois inteiros, obtém do usuário esses números e imprime sua soma, produto, diferença e divisão.
+
+import java.util.Scanner;
+
+public class Atividade1 {
+    public static void main(String[] args) {
+        int num1, num2, soma, mult, sub, div;
+
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("Entre com um numero: ");
+        num1 = entrada.nextInt();
+
+        System.out.println("Entre com outro numero: ");
+        num2 = entrada.nextInt();
+
+        soma = num1 + num2;
+        mult = num1 * num2;
+        sub = num1 - num2;
+        div = num1 / num2;
+
+        System.out.printf("A soma de %d + %d = %d\n", num1, num2, soma);
+        System.out.printf("O produto de %d x %d = %d\n", num1, num2, mult);
+        System.out.printf("A subtracao de %d - %d = %d\n", num1, num2, sub);
+        System.out.printf("A divisao  de %d / %d = %d\n", num1, num2, div);
+ 
+    }
+}
+
+
+2. Escreva um aplicativo que insere um número consistindo em cinco dígitos do usuário, separa o número em seus dígitos individuais e imprime os dígitos separados uns dos outros por três espaços cada.
+Por exemplo, se o usuário digitar o número 42339, o programa deve imprimir:
+4 2 3 3 9.
+
+import java.util.Scanner;
+
+public class Atividade1 {
+    public static void main(String[] args) {
+
+	Scanner entrada = new Scanner(System.in);
+        int num;
+
+        System.out.println("Entre com um numero de 5 digitos: ");
+        num = entrada.nextInt();
+       
+
+	if (num >= 10000 && num <= 99999){
+		int d1 = num / 10000;
+		int d2 = (num % 10000) / 10000;
+		int d3 = (num % 1000) / 100;
+		int d4 = (num % 100) / 10;
+		int d5 = num % 10;
+
+        System.out.printf("%d   %d   %d   %d   %d\n", d1, d2, d3, d4, d5);
+	} else{
+		System.out.println("Erro: O numero inserido nao tem cinco digitos.");
+	}
+            }}
+
+
+3. Escreva um aplicativo que receba a, b e c, coeficientes de uma equação do segundo grau, e calcule as raízes x’ e x” através da fórmula de Báskara.
+
+
+import java.util.Scanner;
+public class Atividade1 {
+	public static void main (String[] args){
+		Scanner entrada = new Scanner(System.in);
+		double a, b, c;
+		System.out.println("Calcular raizes usando a forma de baskara...\n");
+
+		System.out.println("Digite o valor do numero 'A':");	
+		  a = entrada.nextDouble();
+			
+		System.out.println("Digite o valor do numero 'B':");
+		  b = entrada.nextDouble();
+
+		System.out.println("Digite o valor do numero 'C':");
+		  c = entrada.nextDouble();
+		
+		double delta = Math.pow(b, 2) - 4 * a * c;
+
+		if (delta < 0){
+			System.out.println("Delta < 0 : Raizes nao reais.\n");
+		}else if(delta == 0){
+			double x = -b / (2 * a);
+			System.out.printf("Delta = 0: Unica raiz real: x = %.2f\n", x) ;
+		}else {
+			double x1 = (-b + Math.sqrt(delta)) / (2 * a);
+           			double x2 = (-b - Math.sqrt(delta)) / (2 * a);
+            		System.out.printf("Delta > 0: Raízes reais: x1 = %.2f, x2 = %.2f\n", x1, x2);  }	
+}	
+}
+
+
+4. Escreva um programa que leia a quantidade em segundos e imprima o resultado em dias, horas, minutos e segundos.
+
+import java.util.Scanner;
+
+public class Atividade1 {
+
+    public static void main(String[] args) {
+
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("Digite a quantidade de segundos: ");
+        int numSeg = entrada.nextInt();
+
+        int dia = numSeg / 86400; // dias completos
+        int segundos = numSeg % 86400; // resto dos segundos < dia
+
+        int hora = segundos / 3600; // horas
+        segundos %= 3600; // segundos restantes < hora
+
+        int min = segundos / 60; // minutos
+        int seg = segundos % 60; // segundos restantes
+
+        System.out.printf("%d segundos sao %d dia(s), %d horas, %d minutos e %d segundos.\n", numSeg, dia, hora, min, seg);
+
+    }
+}
