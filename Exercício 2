@@ -1,0 +1,163 @@
+## Exercício 2
+
+1) Crie um aplicativo para gerenciar saldo de conta bancária.
+
+import java.util.Scanner;
+public class atividade {
+    public static void main(String[] args) {
+        double saldoConta = 0.0; 
+        double deposito;
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.printf("Saldo atual da conta: R$%.2f.\n", saldoConta);
+
+        System.out.print("Digite o valor do deposito: ");
+        deposito = input.nextDouble();
+
+        saldoConta += deposito;
+
+        System.out.printf("\nR$%.2f depositados na conta...\n", deposito);
+        System.out.printf("Saldo atual da conta: R$%.2f.\n", saldoConta);
+    }
+}
+
+
+2) Refatore o exercício utilizando JOptionPane para interação.
+
+import javax.swing.JOptionPane;
+
+
+public class atividade {
+    public static void main(String[] args) {
+        double saldoConta = 0.0; 
+        
+	JOptionPane.showMessageDialog(null, String.format("Saldo atual da conta: R$%.2f.\n", saldoConta));
+	
+	String depositoString = JOptionPane.showInputDialog("Digite o valor do deposito: ");
+
+        double deposito = Double.parseDouble(depositoString);;
+
+
+        saldoConta += deposito;
+
+        JOptionPane.showMessageDialog(null, String.format("R$%.2f depositados na conta...\nSaldo atual da conta: R$%.2f.", deposito, saldoConta));
+
+    }
+}
+
+
+3) Modifique a classe Chamada para incluir o nome do professor e ajuste o construtor e o método mensagem.
+
+//Chamada
+public class Chamada {
+    private String nomeCurso;
+    private String nomeProfessor;
+
+    public Chamada(String nomeCurso, String nomeProfessor) {
+        this.nomeCurso = nomeCurso;
+        this.nomeProfessor = nomeProfessor;
+    }
+
+    public void setNomeCurso(String nomeCurso) {
+        this.nomeCurso = nomeCurso;
+    }
+
+    public String getNomeCurso() {
+        return nomeCurso;  // Retorna o nome do curso
+    }
+
+    public void setNomeProfessor(String nomeProfessor) {
+        this.nomeProfessor = nomeProfessor;
+    }
+
+    public String getNomeProfessor() {
+        return nomeProfessor; 
+    }
+
+
+    public void mensagem() {
+        System.out.println("Bem-vindo a chamada do curso de " + 	getNomeCurso() + 
+        " ministrado pelo professor " + getNomeProfessor()); 
+    }
+}
+
+//ChamadaTeste
+import java.util.Scanner;
+
+public class ChamadaTest {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        
+	System.out.println("Digite o seu curso: ");
+	String curso = input.nextLine();
+
+	System.out.println("Digite o nome do professor: ");
+	String professor = input.nextLine();
+
+	Chamada minhaChamada = new Chamada(curso, professor);
+
+        minhaChamada.mensagem();
+    }
+}
+
+4) Crie uma classe Date com variáveis de instância mês, dia, e ano, métodos set e get, e um método displayDate.
+
+public class Date {
+	private int dia;
+	private int mes;
+	private int ano;
+	public Date (int dia, int mes, int ano ){
+
+		this.dia = dia;
+		this.mes = mes;
+		this.ano = ano;
+	}
+
+	public void setDia(int dia){
+		if(dia > 0 && dia <= 31){
+			this.dia = dia;
+		}else{
+			System.out.println("Dia invalido.");
+		}
+	}
+
+	public int getDia(){
+		return dia;
+	}
+
+	public void setMes(int mes){
+		if(mes > 0 && mes <= 12){
+			this.mes = mes;
+		}else{
+			System.out.println("Mes invalido.");
+		}
+	}
+
+	public int getMes(){
+		return mes;
+	}
+
+	public void setAno(int ano){
+		this.ano = ano;
+	}
+
+	public int getAno(){
+		return ano;
+	}
+
+	public void displayDate(){
+		System.out.println(dia + "/" + mes + "/" + ano); 
+	}
+
+	public static void main(String [] args){
+		Date data = new Date (2, 9, 2024);
+		data.displayDate();
+
+		data.setDia(19);
+		data.setMes(5);
+		data.setAno(2002);
+		data.displayDate();
+	}
+}
+
