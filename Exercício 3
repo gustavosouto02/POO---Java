@@ -1,0 +1,299 @@
+Exercício 1. 
+
+O Código vai imprimir:
+1
+4
+9
+16
+25
+36
+49
+64
+81
+100
+=385
+
+--------------------------------------------------------------------------------------------------------------------
+
+Exercício 2. 
+Consumo do veiculo na viagem:
+
+
+import java.util.Scanner;
+
+public class Viagem{
+
+ public static void main(String[] args){
+	int totalKm = 0;
+	int totalLitros = 0;
+	float media = 0;
+
+	Scanner input = new Scanner(System.in);
+
+	while(true){
+
+		System.out.println("\nQuantidade de quilometros (-1 para encerrar):");
+		int km = input.nextInt();
+	
+		if (km == -1){break;}
+	
+		System.out.println("Quantidade de litros:");
+		int litros = input.nextInt();
+
+		totalKm += km;
+		totalLitros += litros;	
+
+		media = totalKm / totalLitros;
+
+		System.out.printf("\nConsumo da viagem foi: %.2f Km/L\n", media);
+	}
+
+	System.out.printf("\nQuilometros totais: %d Km\n", totalKm);
+	System.out.printf("Litros consumidos: %d L\n", totalLitros);
+	System.out.printf("O consumo medio da viagem: %.2f Km/L\n", media);
+
+
+ }
+}
+--------------------------------------------------------------------------------------------------------------------
+Exercício 3. 
+
+import java.util.Scanner;
+
+public class Cripto {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Digite a senha (4 digitos): ");
+        int num = input.nextInt();
+
+        int[] dig = new int[4];
+
+        // Separando os dígitos
+        for (int i = 3; i >= 0; i--) {
+            dig[i] = num % 10;
+            num /= 10;
+        }
+
+        // Criptografando
+        for (int i = 0; i < 4; i++) {
+            dig[i] = (dig[i] + 7) % 10;
+        }
+
+        // primeiro = terceiro & segundo = quarto
+        int temp = dig[0];
+        dig[0] = dig[2];
+        dig[2] = temp;
+
+        temp = dig[1];
+        dig[1] = dig[3];
+        dig[3] = temp;
+
+        System.out.print("Numero criptografado: ");
+        for (int i = 0; i < 4; i++) {
+            System.out.print(dig[i]);
+        }
+    }
+}
+
+//Descriptografando
+
+import java.util.Scanner;
+
+public class Descripto {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Insira um numero criptografado de 4 digitos: ");
+        int num = input.nextInt();
+
+        int[] dig = new int[4];
+
+        // Separando os dígitos
+        for (int i = 3; i >= 0; i--) {
+            dig[i] = num % 10;
+            num /= 10;
+        }
+
+        // primeiro = terceiro & segundo = quarto
+        int temp = dig[0];
+        dig[0] = dig[2];
+        dig[2] = temp;
+
+        temp = dig[1];
+        dig[1] = dig[3];
+        dig[3] = temp;
+
+	// descriptografando
+	for (int i = 0; i < 4; i++){
+	  dig[i] = (dig[i] + 3) % 10;
+	
+	}
+
+        System.out.print("Numero descriptografado: ");
+        for (int i = 0; i < 4; i++) {
+            System.out.print(dig[i]);
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------
+4. Limite de Credito 
+
+import java.util.Scanner;
+
+public class Limite{
+
+ public static void main(String[] args){
+    
+	Scanner input = new Scanner(System.in);
+
+	int numConta;
+	double saldoInicial;
+	double numItens;
+	double credito;
+	double limiteCredito;
+
+	System.out.println("Numero da conta: ");
+	numConta = input.nextInt();
+
+	System.out.println("Saldo inicial: ");
+	saldoInicial = input.nextDouble();
+
+	System.out.println("Total de itens cobrados: ");
+	numItens = input.nextDouble();
+
+
+	System.out.println("Total de credito utilizado");
+	credito = input.nextDouble();
+
+	System.out.println("Limite de credito autorizado: ");
+	limiteCredito = input.nextDouble();
+
+	double saldoAtual = saldoInicial + numItens - credito;
+
+
+	System.out.printf("O saldo atual do cliente %d e: %.2f\n", numConta, saldoAtual);
+
+	System.out.println(saldoAtual > limiteCredito ? "Limite de credito excedido!" : "Credito dentro do limite.");
+ }
+}
+
+--------------------------------------------------------------------------------------------------------------------
+5. 
+import java.util.Scanner;
+
+public class Limite{
+
+ public static void main(String[] args){
+    
+	Scanner input = new Scanner(System.in);
+
+	int numConta;
+	int saldoInicial;
+	int numItens;
+	int credito;
+	int limiteCredito;
+
+	System.out.println("Numero da conta: ");
+	numConta = input.nextInt();
+
+	System.out.println("Saldo inicial: ");
+	saldoInicial = input.nextDouble();
+
+	System.out.println("Total de itens cobrados: ");
+	numItens = input.nextDouble();
+
+
+	System.out.println("Total de credito utilizado");
+	credito = input.nextDouble();
+
+	System.out.println("Limite de credito autorizado: ");
+	limiteCredito = input.nextDouble();
+
+	int saldoAtual = saldoInicial + numItens - credito;
+
+
+	System.out.printf("O saldo atual do cliente %d e: %.2f\n", numConta, saldoAtual);
+
+	System.out.println(saldoAtual > limiteCredito ? "Limite de credito excedido!" : "Credito dentro do limite.");
+ }
+}
+--------------------------------------------------------------------------------------------------------------------
+6. Desenhar quadrado
+
+import java.util.Scanner;
+
+public class Quadrado {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Informe o tamanho do lado do quadrado (entre 1 e 20): ");
+        int lado = input.nextInt();
+
+             if (lado < 1 || lado > 20) {
+                	System.out.println("Tamanho invalido.");
+        	} else { 
+			desenharLinha(lado); // Linha de cima
+
+            for (int i = 1; i <= lado - 2; i++) {
+                System.out.print("*"); // Primeira borda
+
+                for (int j = 1; j <= lado - 2; j++) {
+                    System.out.print("  "); // vazio
+                }
+
+                System.out.println(" *"); // Última borda
+            }
+
+            if (lado > 1) {
+                desenharLinha(lado); // Linha de baixo
+            }
+        }
+    }
+
+    
+    public static void desenharLinha(int lado) {
+        for (int i = 1; i <= lado; i++) {
+            System.out.print("* ");
+        }
+        System.out.println();
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------
+
+7.
+Calcular Fatorial 
+
+import java.util.Scanner;
+
+public class Fatorial {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in); 
+
+        System.out.println("Informe um numero inteiro positivo: ");
+        int num = input.nextInt();
+
+        if (num < 0) {
+            System.out.println("Numero inválido.");
+        } else {
+         
+            long fatorial = calcFatorial(num);
+
+            System.out.printf("O fatorial de %d e: %d\n", num, fatorial);
+        }
+
+    }
+
+    public static long calcFatorial(int num) {
+        long result = 1;
+        for (int i = 2; i <= num; i++) {
+            result *= i;
+        }
+        return result;
+    }
+}
+
