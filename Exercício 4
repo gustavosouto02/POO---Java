@@ -1,0 +1,179 @@
+01) Juros compostos  US$ 1.000 em uma conta-poupança que rende juros de 5% ao ano, 10 anos:
+    a = p(1 + r)n
+
+public class Juros{
+
+	public static void main(String[] args){
+		
+		double p = 1000;
+		double r = 0.05;
+		int anos = 10;
+		
+		System.out.println("Quantia inicial : 1000,00");
+
+		for (int n = 1; n <= anos; n++){
+			double a = p * Math.pow( 1 + r, n ) ;
+			System.out.printf("Ano %d: %.2f\n", n, a);
+		}
+	}
+
+}
+
+2. Localize o erro em cada um dos seguintes segmentos de código e explique como corrigi-los:
+a)
+      For (i = 100, i >= 1, i++)
+      System.out.println(i);
+
+    R:   Uso de "," ao invés de ";". "for" é com letra minúscula. Está somando, deveria subtrair " i--".
+    for (int i = 100; i >= 1; i--) {
+    System.out.println(i);
+    }
+
+b) O seguinte código deve imprimir se o inteiro value for par ou ímpar:
+switch (value % 2)
+{
+case 0:
+  System.out.println("Even integer");
+case 1:
+  System.out.println("Odd integer");
+}
+
+  R: Falta do "break;".
+  switch (value % 2) {
+    case 0:
+        System.out.println("Even integer");
+        break;  // Impede que o próximo case seja executado
+    case 1:
+        System.out.println("Odd integer");
+        break;
+}
+
+c) O código a seguir deve dar saída dos inteiros ímpares de 19 a 1:
+    for(i =19; i >=1; i +=2)
+    System.out.println(i);
+
+    R: Está somando "i += 2 " deveria subtrair "i -=2 " . 
+    for (int i = 19; i >= 1; i -= 2) {
+    System.out.println(i);
+}
+
+d) O código seguinte deve dar saída dos inteiros pares de 2 a 100:
+counter = 2;
+do
+{
+  System.out.println(counter); counter += 2;
+} While (counter < 100);
+
+  R: "while" tem q ser com letra minuscula, "<= 100" esta parando no 98, faltando "int" pno counter.
+  int counter = 2;
+  do {
+    System.out.println(counter); 
+    counter += 2;
+  } while (counter <= 100);
+
+3) O que o seguinte programa faz?
+  R: Printa uma matriz de 10 linhas com 5 colunas de '@' cada linha, utilizando de 2 loops for
+
+4. Escreva um aplicativo que localiza o menor de vários números inteiros. Suponha que o primeiro valor lido
+especifica o número de valores a serem inseridos pelo usuário.
+
+import java.util.Scanner;
+
+public class MenorNum {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int total;
+
+        System.out.println("Quantos numeros deseja inserir?");
+        total = input.nextInt();
+
+        if (total > 0) {
+            int menor = Integer.MAX_VALUE;
+
+            for (int i = 1; i <= total; i++) {
+                System.out.println("Digite o numero " + i + ":");
+                int num = input.nextInt();
+
+                if (num < menor) {
+                    menor = num;
+                }
+            }
+
+            System.out.println("O menor número inserido e: " + menor);
+        } else {
+            System.out.println("Você deve inserir pelo menos 1 numero.");
+        }
+    }
+}
+5) Mult impar de 1 a 15:
+public class Impar{
+  public static void main(String[] args){
+	System.out.println("Produto dos numeros impares de 1 a 15...");
+	int produto =1;
+
+	for(int i = 1; i <=15 ; i+=2){
+		produto *= i;
+	}
+
+	System.out.printf("%d", produto);
+  }
+}
+ 
+6) Fatorial de 1 a 20:
+ Que dificuldade poderia impedir você de calcular o fatorial de 100?
+ R: o tipo long nao consegue armazenar tantos digitos, pode demorar muito devido ao desempenho para calcular os fatoriais.
+public class Fatorial{
+
+ public static void main(String[] args){
+ 	System.out.println("Numero\tFatorial");
+
+	for (int i = 1; i <= 20; i++){
+		long fatorial = 1;
+		
+		for (int j = 1; j <= i; j++){
+			fatorial *= j;
+		}
+
+ 	  System.out.printf("%d\t%d%n", i, fatorial);
+
+	}
+ }
+}
+
+7) Grafico de Barras:
+import java.util.Scanner;
+
+public class Diagrama {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int[] numeros = new int[5]; 
+
+        System.out.println("Digite cinco números entre 1 e 30:");
+
+        for (int i = 0; i < 5; i++) {
+            int numero; // Corrigido para 'numero'
+            while (true) {
+                System.out.print("Número " + (i + 1) + ": ");
+                numero = input.nextInt();
+
+                if (numero >= 1 && numero <= 30) {
+                    numeros[i] = numero;
+                    break;
+                } else {
+                    System.out.println("Número inválido. Por favor, digite um número entre 1 e 30.");
+                }
+            }
+        }
+
+        System.out.println("\nGráfico de Barras:");
+        for (int i = 0; i < 5; i++) {
+            System.out.print("Número " + (i + 1) + ": ");
+            for (int j = 0; j < numeros[i]; j++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+    }
+}
+
