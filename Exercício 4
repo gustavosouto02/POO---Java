@@ -177,3 +177,95 @@ public class Diagrama {
     }
 }
 
+8) Calcular Pi
+public class Pi {
+
+    public static void main(String[] args) {
+        int numTermos = 200000;
+        String targetPrefix = "3.14159";
+        
+        double soma = 0.0;
+        double piValor;
+        int countTermo = 0;
+        double[] piValores = new double[numTermos];
+        
+        for (int i = 1; i <= numTermos; i++) {
+            double termo = Math.pow(-1, i + 1) * (2 * i - 1) / 4.0;
+            soma += termo;
+            piValor = 4 * soma;
+            piValores[i - 1] = piValor;
+            
+            if (String.format("%.6f", piValor).startsWith(targetPrefix)) {
+                countTermo = i;
+                break;
+            }
+        }
+        
+        if (countTermo > 0) {
+            System.out.printf("Primeiro valor que começa com %s encontrado no termo %d%n", targetPrefix, countTermo);
+            System.out.printf("Valor de pi com os primeiros %d termos: %.6f%n", countTermo, piValores[countTermo - 1]);
+        } else {
+            System.out.println("Não foi possível encontrar o valor de pi com o prefixo desejado nos primeiros " + numTermos + " termos.");
+        }
+    }
+}
+
+9) Crescimento Facebook
+public class Facebook {
+
+    public static void main(String[] args) {
+        double usuario = 1_000_000_000; 
+        double taxa = 0.04; 
+        double usuarios1 = 1_500_000_000;
+        double usuarios2 = 2_000_000_000; 
+
+        double mesesUm = calcularMeses(usuario, usuarios1, taxa);
+        System.out.printf("Meses necessarios para alcançar 1,5 bilhoes de usuarios: %.2f%n", mesesUm);
+
+        double mesesDois = calcularMeses(usuario, usuarios2, taxa);
+        System.out.printf("Meses necessarios para alcançar 2 bilhoes de usuarios: %.2f%n", mesesDois);
+    }
+
+    public static double calcularMeses(double usuario, double usuarios, double taxa) {
+        double crescMensal = 1 + taxa;
+        double meses = Math.log(usuarios / usuario) / Math.log(crescMensal);
+        return meses;
+    }
+}
+10) Calcular Quadrado
+import java.util.Scanner;
+
+public class Quadrado{
+ public static void main(String[] args)
+ {
+	Scanner input = new Scanner(System.in);
+
+	System.out.println("Digite um numero: ");
+	int n = input.nextInt();
+
+	if( n<= 0){
+		 System.out.println("Insira um número natural maior que zero.");
+	}else{
+		int quadrado = calcQuadrado(n);
+		System.out.printf("O quadrado de %d e: %d%n", n, quadrado);
+	}
+	
+ }
+	public static int calcQuadrado(int n){
+
+	int soma = 0 ;
+	int numImpar = 1;
+
+	System.out.println("Calculo do quadrado de " + n + " usando a soma dos numeros impares:");
+
+	for(int i = 0; i < n; i++){
+		soma += numImpar;
+
+		System.out.printf("Adicionando %d: Soma parcial = %d%n", numImpar, soma);
+
+		numImpar += 2 ;
+	}
+ 	return soma;	
+ }
+
+}
