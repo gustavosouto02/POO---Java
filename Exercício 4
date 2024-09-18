@@ -269,3 +269,171 @@ public class Quadrado{
  }
 
 }
+
+11) Soma Fatorial
+import java.util.Scanner;
+
+public class Soma {
+
+    public static long fatorial(int num) {
+        long fatorial = 1;
+        for (int i = 2; i <= num; i++) {
+            fatorial *= i;
+        }
+        return fatorial;
+    }
+
+    public static double soma(int n) {
+        double soma = 1.0;  // O primeiro termo é 1
+        for (int i = 2; i <= n; i++) {
+            soma += 1.0 / fatorial(i);
+        }
+        return soma;
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int n;
+
+        System.out.println("Digite um valor N qualquer, inteiro e positivo:");
+        n = input.nextInt();
+
+        if (n > 0) {
+            double resultado = soma(n);
+            System.out.printf("A soma E e: %.6f\n", resultado);
+        } else {
+            System.out.println("Por favor, insira um numero inteiro positivo.");
+        }
+    }
+}
+12) Calcular Cosseno
+import java.util.Scanner;
+
+public class Cos {
+    
+    public static long fatorial(int num) {
+        long fatorial = 1;
+        for (int i = 2; i <= num; i++) {
+            fatorial *= i;
+        }
+        return fatorial;
+    }
+
+    public static double somaCos(double x, int termos) {
+        double cos = 1.0; 
+        int sinal = -1; 
+
+        for (int i = 2; i <= 2 * termos; i += 2) {
+            cos += sinal * (Math.pow(x, i) / fatorial(i));
+            sinal *= -1;  // Alterna o sinal
+        }
+
+        return cos;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o valor de x (em radianos): ");
+        double x = scanner.nextDouble();
+
+        System.out.print("Digite o numero de termos da serie: ");
+        int termos = scanner.nextInt();
+
+        double resultado = somaCos(x, termos);
+
+        System.out.printf("O valor aproximado de cos(%.2f) e: %.6f\n", x, resultado);
+
+    }
+}
+13) Raiz Babilonia
+import java.util.Scanner;
+
+public class RaizBabilonia{
+  public static void calcRaiz (double N){
+	double k = 1.0;
+	System.out.printf("Valor de k inicial: %.2f\n", k);
+
+	for (int i = 1; i <= 12; i++) {
+            k = (k + N / k) / 2;
+            System.out.printf("Iteracao %d: k = %.6f\n", i, k);
+	}
+
+	double raizExata = Math.sqrt(N);
+        System.out.printf("Raiz quadrada CORRETA: %.6f\n", raizExata);
+
+}
+
+  public static void main(String[] args){
+	Scanner input = new Scanner (System.in);
+
+	System.out.print("Digite o valor de N: ");
+        double N = input.nextDouble();
+	
+	if (N > 0) {
+            calcRaiz(N);
+        } else {
+            System.out.println("Por favor, insira um número positivo.");
+        }
+  }
+
+}
+14) Fibonacci
+import java.util.Scanner;
+
+public class Fibonacci{
+  public static int calcFibonacci(int n){
+	int a = 1, b = 1, termo = 1;
+
+	for (int i = 3; i <= n; i++){
+		termo = a + b;
+		a = b;
+		b = termo;
+	} return termo;
+
+  }
+  public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+	System.out.print("Digite o valor de n (n >= 3): ");
+        int n = scanner.nextInt();
+
+	if (n >= 3) {
+           	 	int resultado = calcFibonacci(n);
+            	System.out.printf("O %d-esimo termo da serie de Fibonacci e: %d\n", n, resultado);
+       	 } else {
+          		System.out.println("Por favor, insira um valor de n maior ou igual a 3.");
+      	 }
+  }
+
+}
+
+15) Verificar Primo
+import java.util.Scanner;
+
+public class VerificarPrimo{
+  public static boolean Primo(int n ){
+	if( n < 2){
+		return false;
+	}
+	
+	for (int i = 2; i <= Math.sqrt(n); i++){
+		if(n % i == 0){
+			return false;
+		}
+	} 
+		return true;
+  }
+	 public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Digite um numero inteiro: ");
+        int n = input.nextInt();
+
+        if (Primo(n)) {
+            System.out.printf("O numero %d e primo.\n", n);
+        } else {
+            System.out.printf("O numero %d nao e primo.\n", n);
+        }
+ }
+} 
