@@ -1,0 +1,462 @@
+1) Celsius para Fahrenheit
+
+import java.util.Scanner;
+
+public class Temperatura {
+
+    public static double celToFah(double cel) {
+        return (cel * 9 / 5) + 32;
+    }
+
+    public static double fahToCel(double fah) {
+        return (fah - 32) * 5 / 9;
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Escolha a conversão:");
+        System.out.println("1. Celsius para Fahrenheit");
+        System.out.println("2. Fahrenheit para Celsius");
+        System.out.print("Digite sua escolha (1 ou 2): ");
+        
+        int escolha = input.nextInt();
+
+        try {
+            switch (escolha) {
+                case 1:
+                    System.out.print("Digite a temperatura em Celsius: ");
+                    String celsiusInput = input.next(); 
+                    double celsius = Double.parseDouble(celsiusInput);
+                    double fahrenheit = celToFah(celsius);
+                    System.out.printf("%.2f Celsius = %.2f Fahrenheit%n", celsius, fahrenheit);
+                    break;
+
+                case 2:
+                    System.out.print("Digite a temperatura em Fahrenheit: ");
+                    String fahrenheitInput = input.next(); 
+                    double fahrenheitValue = Double.parseDouble(fahrenheitInput); 
+                    double celsiusResult = fahToCel(fahrenheitValue); 
+                    System.out.printf("%.2f Fahrenheit = %.2f Celsius%n", fahrenheitValue, celsiusResult);
+                    break;
+
+                default:
+                    System.out.println("Escolha inválida! Por favor, digite 1 ou 2.");
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Erro: Você deve inserir um número válido.");
+        } catch (Exception e) {
+            System.err.println("Erro inesperado: " + e.getMessage());
+        } finally {
+            input.close(); 
+            
+        }
+    }
+}
+
+2) Idade Inválida
+//InvalidAge.java
+public class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+//Cliente.java
+public class Cliente {
+    private String nome;
+    private int idade;
+
+    public Cliente(String nome, int idade) throws InvalidAgeException {
+        if (idade <= 0 || idade < 18) {
+            throw new InvalidAgeException("A idade deve ser maior que 18 anos.");
+        }
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+}
+//CadastroCliente.java
+import java.util.Scanner;
+
+public class CadastroCliente {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Digite o nome do cliente: ");
+        String nome = input.nextLine();
+
+        System.out.println("Digite a idade do cliente: ");
+        int idade = input.nextInt(); // Corrigido para idade
+
+        try {
+            Cliente cliente = new Cliente(nome, idade);
+            System.out.printf("Cliente cadastrado: %s | Idade: %d\n", cliente.getNome(), cliente.getIdade());
+        } catch (InvalidAgeException e) {
+            System.out.println("Erro ao cadastrar cliente: " + e.getMessage()); // Corrigido para usar + em vez de vírgula
+        } finally {
+            input.close();
+        }
+    }
+}
+
+3) Fatorial
+//Main.java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Digite um número para calcular o fatorial: ");
+        
+        try {
+            int numero = scanner.nextInt();
+            long fatorial = FatorialCalculator.calcularFatorial(numero);
+            System.out.printf("O fatorial de %d é: %d%n", numero, fatorial);
+        } catch (NegativeNumberException e) {
+            System.out.println("Erro: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erro: Entrada inválida. Por favor, insira um número inteiro.");
+        } finally {
+            scanner.close();
+        }
+    }
+}
+//FatorialCalculator.java
+public class FatorialCalculator{
+    public static long calcularFatorial(int num) throws NegativeNumberException{
+        if(num < 0 ){
+            throw new NegativeNumberException("O numero não pode ser negativo.");
+        }
+        if(num == 0 || num == 1){
+            return 1;
+        }
+        return num * calcularFatorial(num - 1);
+    }
+}
+//NegativeNumberException
+
+public class NegativeNumberException extends Exception {
+    public NegativeNumberException(String message) {
+        super(message);
+    }
+}
+
+4) Conta
+// Exception
+public class SaldoInsuficienteException extends Exception {
+    public SaldoInsuficienteException(String message) {
+        super(message);
+    }
+}
+//Conta
+public class ContaBancaria {
+    private String titular;
+    private double saldo;
+
+    public ContaBancaria(String titular) {
+        this.titular = titular;
+        this.saldo = 0.0;
+    }
+
+    public String getTitular() {
+        return titular;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+            System.out.printf("Depósito de %.2f realizado com sucesso! Saldo atual: %.2f%n", valor, saldo);
+        } else {
+            System.out.println("Valor de depósito deve ser maior que zero.");
+        }
+    }
+
+    public void sacar(double valor) throws SaldoInsuficienteException {
+        if (valor > saldo) {
+            throw new SaldoInsuficienteException("Saldo insuficiente! Saldo atual: " + saldo);
+        } else {
+            saldo -= valor;
+            System.out.printf("Saque de %.2f realizado com sucesso! Saldo atual: %.2f%n", valor, saldo);
+        }
+    }
+}
+// Main
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Digite o nome do titular da conta: ");
+        String titular = scanner.nextLine();
+
+        ContaBancaria conta = new ContaBancaria(titular);
+        
+        while (true) {
+            System.out.println("\nEscolha uma operação:");
+            System.out.println("1. Depositar");
+            System.out.println("2. Sacar");
+            System.out.println("3. Ver Saldo");
+            System.out.println("4. Sair");
+            System.out.print("Digite sua escolha: ");
+
+            int escolha = scanner.nextInt();
+
+            switch (escolha) {
+                case 1:
+                    System.out.print("Digite o valor para depositar: ");
+                    double valorDeposito = scanner.nextDouble();
+                    conta.depositar(valorDeposito);
+                    break;
+
+                case 2:
+                    System.out.print("Digite o valor para sacar: ");
+                    double valorSaque = scanner.nextDouble();
+                    try {
+                        conta.sacar(valorSaque);
+                    } catch (SaldoInsuficienteException e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
+                    break;
+
+                case 3:
+                    System.out.printf("Saldo atual: %.2f%n", conta.getSaldo());
+                    break;
+
+                case 4:
+                    System.out.println("Saindo do sistema.");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
+        }
+    }
+}
+5) Produto
+// Exception
+public class PrecoInvalidoException extends Exception {
+    public PrecoInvalidoException(String message) {
+        super(message);
+    }
+}
+//Produto
+public class Produto {
+    private String nome;
+    private double preco;
+
+    public Produto(String nome, double preco) throws PrecoInvalidoException {
+        if (preco <= 0) {
+            throw new PrecoInvalidoException("O preço do produto deve ser maior que zero.");
+        }
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Produto: %s | Preço: %.2f", nome, preco);
+    }
+}
+//Main
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<Produto> produtos = new ArrayList<>();
+
+        while (true) {
+            System.out.print("Digite o nome do produto (ou 'sair' para encerrar): ");
+            String nome = scanner.nextLine();
+
+            if (nome.equalsIgnoreCase("sair")) {
+                break; 
+            }
+
+            System.out.print("Digite o preço do produto: ");
+            double preco = scanner.nextDouble();
+            scanner.nextLine(); 
+
+            try {
+                Produto produto = new Produto(nome, preco);
+                produtos.add(produto);
+                System.out.println("Produto cadastrado com sucesso!");
+            } catch (PrecoInvalidoException e) {
+                System.out.println("Erro ao cadastrar produto: " + e.getMessage());
+            }
+        }
+
+        System.out.println("\nProdutos cadastrados:");
+        for (Produto produto : produtos) {
+            System.out.println(produto);
+        }
+
+        scanner.close();
+    }
+}
+6) Numero 1 a 100
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Digite um número entre 1 e 100: ");
+        int numero = scanner.nextInt();
+
+        assert (numero >= 1 && numero <= 100) : "Número fora do intervalo permitido (1-100)";
+
+        System.out.println("Número válido: " + numero);
+
+        scanner.close();
+    }
+}
+
+7) Notas
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        final int NUM_NOTAS = 4; // exemplo, 4 notas
+
+        double[] notas = new double[NUM_NOTAS];
+
+        for (int i = 0; i < NUM_NOTAS; i++) {
+            System.out.printf("Digite a nota %d (entre 0 e 10): ", (i + 1));
+            notas[i] = scanner.nextDouble();
+
+            assert (notas[i] >= 0 && notas[i] <= 10) : "Nota inválida! A nota deve estar entre 0 e 10.";
+        }
+
+        System.out.println("Notas válidas:");
+        for (double nota : notas) {
+            System.out.printf("%.2f ", nota);
+        }
+        
+        scanner.close();
+    }
+}
+
+8) Produto 
+import java.util.Scanner;
+
+public class Produto {
+    private String nome;
+    private double preco;
+
+    public Produto(String nome, double preco) {
+        this.nome = nome;
+        setPreco(preco);
+    }
+
+    public void setPreco(double preco) {
+        // Usando assert para garantir que o preço seja maior que zero
+        assert (preco > 0) : "Preço inválido! O preço deve ser maior que zero.";
+        this.preco = preco;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o nome do produto: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Digite o preço do produto: ");
+        double preco = scanner.nextDouble();
+
+        try {
+            Produto produto = new Produto(nome, preco);
+            System.out.printf("Produto cadastrado: %s | Preço: %.2f%n", produto.getNome(), produto.getPreco());
+        } catch (AssertionError e) {
+            System.out.println("Erro ao cadastrar produto: " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}
+
+9) Ordem crescente
+import java.util.Scanner;
+
+public class OrdemCrescente {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o primeiro número: ");
+        int num1 = scanner.nextInt();
+
+        System.out.print("Digite o segundo número: ");
+        int num2 = scanner.nextInt();
+
+        System.out.print("Digite o terceiro número: ");
+        int num3 = scanner.nextInt();
+
+        assert (num1 <= num2 && num2 <= num3) : "Os números não estão em ordem crescente!";
+
+        System.out.println("Os números estão em ordem crescente: " + num1 + ", " + num2 + ", " + num3);
+
+        scanner.close();
+    }
+}
+
+10) Fatorial 
+import java.util.Scanner;
+
+public class Fatorial {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite um número inteiro não negativo para calcular o fatorial: ");
+        int numero = scanner.nextInt();
+
+        assert (numero >= 0) : "O número deve ser não negativo!";
+
+        long fatorial = calcularFatorial(numero);
+        System.out.printf("O fatorial de %d é: %d%n", numero, fatorial);
+
+        scanner.close();
+    }
+
+    public static long calcularFatorial(int n) {
+        long resultado = 1;
+        for (int i = 1; i <= n; i++) {
+            resultado *= i;
+        }
+        return resultado;
+    }
+}
+
+
