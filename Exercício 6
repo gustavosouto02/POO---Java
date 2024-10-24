@@ -1,0 +1,381 @@
+1) Sinal de Transito 
+public enum TrafficLight {
+    RED(30),    // DURAÇÃO 30 segundos
+    GREEN(45),  // DURAÇÃO 45 segundos
+    YELLOW(5);  // DURAÇÃO 5 segundos
+
+    private final int duration; 
+
+    TrafficLight(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+}
+//teste
+public class TestTrafficLight {
+    public static void main(String[] args) {
+        for (TrafficLight light : TrafficLight.values()) {
+            System.out.printf("A luz %s dura %d segundos.%n", light, light.getDuration());
+        }
+    }
+}
+
+2) jogo da velha 
+import java.util.Scanner;
+
+public class TicTacToe {
+    public enum Cell {
+        X, O, EMPTY
+    }
+
+    private final Cell[][] board; // 3x3
+
+    public TicTacToe() {
+        board = new Cell[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = Cell.EMPTY; // Inicializa o tabuleiro com EMPTY
+            }
+        }
+    }
+
+    // Método para imprimir o tabuleiro
+    public void printBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    // Método para verificar se um jogador ganhou
+    public boolean checarVitoria(Cell player) {
+        for (int i = 0; i < 3; i++) {
+            if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) ||
+                (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
+                return true;
+            }
+        }
+        return (board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
+               (board[0][2] == player && board[1][1] == player && board[2][0] == player);
+    }
+
+    // Método para verificar se o tabuleiro está cheio
+    public boolean estaCheio() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == Cell.EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true; // Tabuleiro está cheio
+    }
+
+    // Método para jogar
+    public boolean makeMove(int row, int col, Cell player) {
+        if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == Cell.EMPTY) {
+            board[row][col] = player;
+            return true;
+        }
+        return false; // Movimento inválido
+    }
+
+    // Método principal para executar o jogo
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        TicTacToe game = new TicTacToe();
+        Cell currentPlayer = Cell.X; // Primeiro jogador é X
+
+        while (true) {
+            game.printBoard();
+            System.out.printf("Jogador %s, faça sua jogada (linha e coluna): ", currentPlayer);
+            int row = scanner.nextInt();
+            int col = scanner.nextInt();
+
+            if (game.makeMove(row, col, currentPlayer)) {
+                if (game.checarVitoria(currentPlayer)) {
+                    game.printBoard();
+                    System.out.printf("Parabéns, jogador %s! Você ganhou!%n", currentPlayer);
+                    break;
+                }
+                if (game.estaCheio()) {
+                    game.printBoard();
+                    System.out.println("Empate!");
+                    break;
+                }
+                currentPlayer = (currentPlayer == Cell.X) ? Cell.O : Cell.X; // Alterna o jogador
+            } else {
+                System.out.println("Movimento inválido. Tente novamente.");
+            }
+        }
+        scanner.close();
+    }
+}
+3) Numeros compexos
+//complex
+public class Complex {
+    private double real; 
+    private double imaginary;
+
+    public Complex() {
+        this.real = 0.0;
+        this.imaginary = 0.0;
+    }
+
+    // Construtor com parâmetros
+    public Complex(double real, double imaginary) {
+        this.real = real;
+        this.imaginary = imaginary;
+    }
+
+    // Método para somar dois números complexos
+    public Complex add(Complex other) {
+        return new Complex(this.real + other.real, this.imaginary + other.imaginary);
+    }
+
+    // Método para subtrair dois números complexos
+    public Complex subtract(Complex other) {
+        return new Complex(this.real - other.real, this.imaginary - other.imaginary);
+    }
+
+    // Método para imprimir números complexos
+    public void print() {
+        System.out.printf("(%.2f, %.2fi)%n", real, imaginary);
+    }
+}
+//teste
+public class ComplexTest {
+    public static void main(String[] args) {
+        // Criando números complexos
+        Complex c1 = new Complex(3.0, 2.0);
+        Complex c2 = new Complex(1.5, 4.5);
+
+        // Somando c1 e c2
+        Complex sum = c1.add(c2);
+        System.out.print("Soma: ");
+        sum.print();
+
+        // Subtraindo c2 de c1
+        Complex difference = c1.subtract(c2);
+        System.out.print("Subtração: ");
+        difference.print();
+
+        // Testando o construtor sem argumentos
+        Complex c3 = new Complex();
+        System.out.print("Número complexo padrão: ");
+        c3.print();
+    }
+}
+
+4) Date
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+public class DateFormat {
+    private int dia;
+    private int mes; 
+    private int ano;
+
+    // Construtor 1: MM/DD/YYYY
+    public DateFormat(int mes, int dia, int ano) {
+        this.mes = mes;
+        this.dia = dia;
+        this.ano = ano;
+    }
+
+    // Construtor 2: "Month Day"
+    public DateFormat(String dateString, int ano) {
+        try {
+            String[] parts = dateString.split(" ");
+            this.mes = getMonthNumber(parts[0]);
+            this.dia = Integer.parseInt(parts[1].replace(",", ""));
+            this.ano = ano;
+        } catch (Exception e) {
+            System.out.println("Data inválida.");
+        }
+    }
+
+    // Construtor 3: DDD YYYY
+    public DateFormat(int diaDoAno, int ano) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, ano);
+        calendar.set(Calendar.DAY_OF_YEAR, diaDoAno);
+        this.dia = calendar.get(Calendar.DAY_OF_MONTH);
+        this.mes = calendar.get(Calendar.MONTH) + 1; // Meses começam em 0
+        this.ano = calendar.get(Calendar.YEAR);
+    }
+
+    // Método para imprimir a data em formato MM/DD/YYYY
+    public String toMMDDYYYY() {
+        return String.format("%02d/%02d/%04d", mes, dia, ano);
+    }
+
+    // Método para imprimir a data no formato "Month Day, Year"
+    public String toStringLongFormat() {
+        String monthString = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(getDate());
+        return String.format("%s %d, %d", monthString, dia, ano);
+    }
+
+    // Método para imprimir a data em formato "DDD YYYY"
+    public String toDDDYYYY() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(ano, mes - 1, dia);
+        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        return String.format("%03d %d", dayOfYear, ano);
+    }
+
+    // Método auxiliar para converter mês por extenso em número
+    private int getMonthNumber(String monthName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("MMMM", Locale.ENGLISH);
+            Date date = sdf.parse(monthName);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            return cal.get(Calendar.MONTH) + 1; // Meses começam em 0
+        } catch (Exception e) {
+            return -1; // Retorna -1 em caso de erro
+        }
+    }
+
+    // Método auxiliar para obter a data como objeto Date
+    private Date getDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(ano, mes - 1, dia);
+        return calendar.getTime();
+    }
+}
+
+// teste
+public class DateTest {
+    public static void main(String[] args) {
+        // Usando o construtor MM/DD/YYYY
+        DateFormat date1 = new DateFormat(6, 14, 1992);
+        System.out.println("MM/DD/YYYY: " + date1.toMMDDYYYY());
+        System.out.println("Long Format: " + date1.toStringLongFormat());
+        System.out.println("DDD YYYY: " + date1.toDDDYYYY());
+
+        // Usando o construtor "Month Day"
+        DateFormat date2 = new DateFormat("June 14", 1992);
+        System.out.println("\nMM/DD/YYYY: " + date2.toMMDDYYYY());
+        System.out.println("Long Format: " + date2.toStringLongFormat());
+        System.out.println("DDD YYYY: " + date2.toDDDYYYY());
+
+        // Usando o construtor DDD YYYY
+        DateFormat date3 = new DateFormat(165, 1992); // 165º dia do ano
+        System.out.println("\nMM/DD/YYYY: " + date3.toMMDDYYYY());
+        System.out.println("Long Format: " + date3.toStringLongFormat());
+        System.out.println("DDD YYYY: " + date3.toDDDYYYY());
+    }
+}
+
+5) Operação com frações
+public class Racional {
+    private int numerador;
+    private int denominador;
+
+    // Construtor com argumentos
+    public Racional(int numerador, int denominador) {
+        if (denominador == 0) {
+            throw new IllegalArgumentException("O denominador não pode ser zero.");
+        }
+        int mdc = mdc(numerador, denominador); // Reduzir a fração
+        this.numerador = numerador / mdc;
+        this.denominador = denominador / mdc;
+
+        // Garantir que o denominador seja positivo
+        if (this.denominador < 0) {
+            this.numerador = -this.numerador;
+            this.denominador = -this.denominador;
+        }
+    }
+
+    // Construtor sem argumentos (valor padrão 0/1)
+    public Racional() {
+        this.numerador = 0;
+        this.denominador = 1;
+    }
+
+    // Método estático para somar duas frações
+    public static Racional somar(Racional r1, Racional r2) {
+        int numerador = r1.numerador * r2.denominador + r2.numerador * r1.denominador;
+        int denominador = r1.denominador * r2.denominador;
+        return new Racional(numerador, denominador);
+    }
+
+    // Método estático para subtrair duas frações
+    public static Racional subtrair(Racional r1, Racional r2) {
+        int numerador = r1.numerador * r2.denominador - r2.numerador * r1.denominador;
+        int denominador = r1.denominador * r2.denominador;
+        return new Racional(numerador, denominador);
+    }
+
+    // Método estático para multiplicar duas frações
+    public static Racional multiplicar(Racional r1, Racional r2) {
+        int numerador = r1.numerador * r2.numerador;
+        int denominador = r1.denominador * r2.denominador;
+        return new Racional(numerador, denominador);
+    }
+
+    // Método estático para dividir duas frações
+    public static Racional dividir(Racional r1, Racional r2) {
+        if (r2.numerador == 0) {
+            throw new IllegalArgumentException("Não é possível dividir por zero.");
+        }
+        int numerador = r1.numerador * r2.denominador;
+        int denominador = r1.denominador * r2.numerador;
+        return new Racional(numerador, denominador);
+    }
+
+    // Método para retornar a representação String da fração
+    @Override
+    public String toString() {
+        return numerador + "/" + denominador;
+    }
+
+    // Método para retornar a representação decimal da fração
+    public String paraDecimal() {
+        return String.format("%.2f", (double) numerador / denominador);
+    }
+
+    // Método para calcular o máximo divisor comum (MDC)
+    private int mdc(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return Math.abs(a);
+    }
+}
+
+// teste
+public class RacionalTeste {
+    public static void main(String[] args) {
+        // Criando frações
+        Racional r1 = new Racional(1, 2); // 1/2
+        Racional r2 = new Racional(3, 4); // 3/4
+
+        // Testando operações
+        Racional soma = Racional.somar(r1, r2);
+        Racional subtracao = Racional.subtrair(r1, r2);
+        Racional multiplicacao = Racional.multiplicar(r1, r2);
+        Racional divisao = Racional.dividir(r1, r2);
+
+        // Imprimindo resultados
+        System.out.println("R1: " + r1);
+        System.out.println("R2: " + r2);
+        System.out.println("Soma: " + soma + " (" + soma.paraDecimal() + ")");
+        System.out.println("Subtração: " + subtracao + " (" + subtracao.paraDecimal() + ")");
+        System.out.println("Multiplicação: " + multiplicacao + " (" + multiplicacao.paraDecimal() + ")");
+        System.out.println("Divisão: " + divisao + " (" + divisao.paraDecimal() + ")");
+    }
+}
+
+
